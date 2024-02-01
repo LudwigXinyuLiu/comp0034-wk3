@@ -3,7 +3,7 @@ from typing import List
 from sqlalchemy import ForeignKey
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 from paralympics import db
-
+import json
 
 # This uses the latest syntax for SQLAlchemy, older tutorials will show different syntax
 # SQLAlchemy provide an __init__ method for each model, so you do not need to declare this in your code

@@ -3,7 +3,7 @@ import os
 from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy.orm import DeclarativeBase
-
+from flask_marshmallow import Marshmallow
 
 # https://flask-sqlalchemy.palletsprojects.com/en/3.1.x/quickstart/
 class Base(DeclarativeBase):
@@ -13,6 +13,9 @@ class Base(DeclarativeBase):
 # First create the db object using the SQLAlchemy constructor.
 # Pass a subclass of either DeclarativeBase or DeclarativeBaseNoMeta to the constructor.
 db = SQLAlchemy(model_class=Base)
+
+# Create a global Flask-Marshmallow object
+ma = Marshmallow()
 
 
 def create_app(test_config=None):
@@ -42,10 +45,10 @@ def create_app(test_config=None):
 
     # Initialise Flask with the SQLAlchemy database extension
     db.init_app(app)
-
+    ma.init_app(app)
     # Models are defined in the models module, so you must import them before calling create_all, otherwise SQLAlchemy
     # will not know about them.
-    from paralympics.models import User, Region, Event
+    #from paralympics.models import User, Region, Event
     # Create the tables in the database
     # create_all does not update tables if they are already in the database.
     with app.app_context():
@@ -57,10 +60,10 @@ def create_app(test_config=None):
         add_data(db)
 
         # Register the routes with the app in the context
-        from paralympics import paralympics
-
+        from paralympics import para
+    #from paralympics.models import Region, Event, User
     return app
 
 
 # Import can be here instead (but not at the top of the file) to avoid circular import issues
-# from paralympics.models import Region, Event, User
+from paralympics.models import Region, Event, User
